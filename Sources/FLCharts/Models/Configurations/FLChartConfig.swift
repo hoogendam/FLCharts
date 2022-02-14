@@ -81,11 +81,11 @@ public class FLChartConfig {
     // MARK: - Internal methods
     
     func setMarginTop(to value: CGFloat) {
-        margin.top += value
+        margin.top = value
     }
 
     func setMarginBottom(to value: CGFloat) {
-        margin.bottom += value
+        margin.bottom = value
     }
 
     func setMargin(for yPosition: YPosition, horizontalMargin: CGFloat) {

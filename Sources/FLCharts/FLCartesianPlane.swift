@@ -85,7 +85,7 @@ public class FLCartesianPlane: UIView, FLStylable {
     private let dataMinValue: CGFloat = 0
     private var dataMaxValue: CGFloat { chartData.maxYValue(forType: chartType) ?? 0 }
     
-    private let labels = Labels()
+    private var labels = Labels()
     
     // MARK: - Inits
     
@@ -119,6 +119,7 @@ public class FLCartesianPlane: UIView, FLStylable {
         self.rect = rect
         
         context.saveGState()
+        labels = Labels()
         
         guard dataMaxValue > 0 else {
             drawNoDataLabel()
