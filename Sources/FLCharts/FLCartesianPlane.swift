@@ -75,9 +75,9 @@ public class FLCartesianPlane: UIView, FLStylable {
     private var chartWidth: CGFloat { chartRight - chartLeft }
     private var chartHeight: CGFloat { chartBottom - chartTop }
     
-    private let axesLines = CGMutablePath()
-    private let ticksLines = CGMutablePath()
-    private let dashedLines = CGMutablePath()
+    private var axesLines = CGMutablePath()
+    private var ticksLines = CGMutablePath()
+    private var dashedLines = CGMutablePath()
     
     private let xUnitLabelSpacing: CGFloat = -5
     private let yUnitLabelSpacing: CGFloat = 5
@@ -119,6 +119,11 @@ public class FLCartesianPlane: UIView, FLStylable {
         self.rect = rect
         
         context.saveGState()
+
+        /// Reset lines and labels
+        axesLines = CGMutablePath()
+        ticksLines = CGMutablePath()
+        dashedLines = CGMutablePath()
         labels = Labels()
         
         guard dataMaxValue > 0 else {
