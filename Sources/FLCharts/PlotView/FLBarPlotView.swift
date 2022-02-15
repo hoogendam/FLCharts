@@ -28,16 +28,11 @@ internal final class FLBarPlotView: UIView, FLPlotView {
     /// Whether to show the axes ticks.
     internal var showTicks: Bool = true
     
-    /// Whether the chart should scroll horizontally.
-    internal var shouldScroll: Bool = true
-    
     /// The data to show in the chart.
     internal private(set) var chartData: FLChartData
 
     /// The bar view to use in the chart.
     private let bar: ChartBar.Type
-        
-    private var cellWidth: CGFloat { barConfig.width + barConfig.spacing }
 
     internal weak var highlightingDelegate: ChartHighlightingDelegate? {
         didSet {
@@ -69,7 +64,7 @@ internal final class FLBarPlotView: UIView, FLPlotView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     /// Updates the values of the chart.
     internal func updateData(_ data: [PlotableData]) {
         self.chartData.dataEntries = data
@@ -125,12 +120,16 @@ extension FLBarPlotView: UICollectionViewDataSource {
 extension FLBarPlotView: UICollectionViewDelegateFlowLayout {
     
     internal func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if shouldScroll {
-            return CGSize(width: cellWidth, height: collectionView.frame.height)
-        } else {
+        switch barConfig.sizing {
+        case .noScroll:
             let numberOfBars = CGFloat(chartData.dataEntries.count)
             let cellWidth = collectionView.frame.width / numberOfBars
             return CGSize(width: cellWidth, height: collectionView.frame.height)
+        case .fixed(let width):
+            return CGSize(width: width + barConfig.spacing, height: collectionView.frame.height)
+        case .adaptive(let bars):
+            let adaptiveWidth = collectionView.frame.width / CGFloat(bars)
+            return CGSize(width: adaptiveWidth, height: collectionView.frame.height)
         }
     }
     

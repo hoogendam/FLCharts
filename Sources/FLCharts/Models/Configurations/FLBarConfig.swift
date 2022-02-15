@@ -26,18 +26,27 @@ public struct FLBarConfig {
     /// The style of the bars corners.
     public var radius: Radius
 
-    /// The width of the bar.
-    /// - note: This value will be used only if ``FLBarPlotView/shouldScroll`` is set to `true`. Else the width of the bar will be calculated based on the width of the chart.
-    public var width: CGFloat
+    public enum Sizing {
+        /// The chart scrolls. The width of each bar is explicitly specified.
+        case fixed(width: CGFloat)
+
+        /// The chart scrolls. The width of each bar will be calculated based on fitting the number of bars specified in the visible width of the chart.
+        case adaptive(bars: Int)
+
+        /// The chart does not scroll. The width of each bar will be calculated based on the width of the chart.
+        case noScroll
+    }
+
+    public var sizing: Sizing
     
     /// The space between each chart bar.
     public var spacing: CGFloat
 
     public init(radius: Radius = .corners(corners: [.layerMinXMinYCorner, .layerMaxXMinYCorner], 3),
-                width: CGFloat = 12,
+                sizing: Sizing = .noScroll,
                 spacing: CGFloat = 5) {
         self.radius = radius
-        self.width = width
+        self.sizing = sizing
         self.spacing = spacing
     }
 }

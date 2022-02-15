@@ -23,17 +23,6 @@ public final class FLChart: UIView, FLStylable {
 
     public private(set) var chartData: FLChartData
     
-    /// Whether the chart should scroll. The chart will start scrolling once there is bar outside of the right bound.
-    ///
-    /// - note: This property can be enabled only while using bar charts.
-    public var shouldScroll: Bool = true {
-        didSet {
-            if let barPlotView = plotView as? FLBarPlotView {
-                barPlotView.shouldScroll = shouldScroll
-            }
-        }
-    }
-    
     /// Whether to show the average line.
     ///
     /// - note: This option will be disabled for line chart with ``MultiPlotable`` data, since is not fair to calculate an average between multiple lines.
